@@ -7,8 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET || (() => {
 const JWT_EXPIRES_IN = "1h";
 
 export class JWTUtil {
-  static generateToken(userId: number, email: string, role: string): string {
-    return jwt.sign({ userId, email, role }, JWT_SECRET, {
+  static generateToken(userId: number, email: string, role: string, username : string): string {
+    return jwt.sign({ userId, email, role, username }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });
   }

@@ -67,13 +67,13 @@ export class UserController {
       const token = JWTUtil.generateToken(
         newUser.user_id,
         newUser.email,
-        newUser.role
+        newUser.role,
+        newUser.username
       );
 
       res.status(201).json({
         message: "User registered successfully",
         token,
-        user: newUser,
       });
     } catch (error) {
       console.error("Registration error:", error);
@@ -111,20 +111,42 @@ export class UserController {
         return res.status(401).json({ message: "Invalid credentials" });
       }
 
-      const token = JWTUtil.generateToken(user.user_id, user.email, user.role);
+      const token = JWTUtil.generateToken(
+        user.user_id,
+        user.email,
+        user.role,
+        user.username
+      );
 
       res.status(200).json({
         message: "Login successful",
         token,
-        user: {
-          user_id: user.user_id,
-          username: user.username,
-          email: user.email,
-          role: user.role,
-        },
       });
     } catch (error) {
       console.error("Login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  static async getProfile(req: Request, res: Response) {
+    try {
+      const userId = parseInt(req.params.userId, 10);
+      const [users]: any = await sequelize.query(
+        "SELECT user_id, username, email, role, created_at, profile_photo_url, DOB, location, first_name, last_name FROM users WHERE user_id = $1",
+        { bind: [userId] }
+      );
+
+      if (users.length === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const user = users[0];
+
+      res.status(200).json({
+        message: "User profile retrieved successfully",
+        user,
+      });
+    } catch (error) {
+      console.error("Get profile error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
