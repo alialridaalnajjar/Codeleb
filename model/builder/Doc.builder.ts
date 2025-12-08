@@ -1,6 +1,5 @@
 import { Doc } from "../Doc.model";
-
-export class DocBuilder implements IDoc {
+export class DocBuilder  {
     doc_id: number
     content: string;
     title: string;

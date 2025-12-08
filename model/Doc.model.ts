@@ -1,6 +1,5 @@
-import IDoc from "./Interface/IDoc";
 
-export class Doc implements IDoc {
+export class Doc  {
   doc_id: number;
   content: string;
   title: string;

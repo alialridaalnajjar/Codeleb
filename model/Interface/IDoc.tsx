@@ -1,4 +1,4 @@
-interface IDoc{
+export interface IDoccc{
     doc_id: number;
     content: string;
     title: string;
@@ -6,4 +6,3 @@ interface IDoc{
     video_fk: number;
 }
 
-export default IDoc;
