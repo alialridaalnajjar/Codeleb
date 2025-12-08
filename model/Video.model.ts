@@ -7,6 +7,7 @@ export class Video implements IVideo {
   video_url: string;
   manifest_url?: string | null;
   duration_seconds: number;
+  genre: string;
 
   constructor(
     video_id: number,
@@ -14,6 +15,7 @@ export class Video implements IVideo {
     title: string,
     video_url: string,
     duration_seconds: number,
+    genre: string,
     manifest_url?: string | null
   ) {
     this.video_id = video_id;
@@ -22,5 +24,6 @@ export class Video implements IVideo {
     this.video_url = video_url;
     this.duration_seconds = duration_seconds;
     this.manifest_url = manifest_url;
+    this.genre = genre;
   }
 }

@@ -7,6 +7,7 @@ export class VideoBuilder {
   private video_url!: string;
   private manifest_url?: string | null;
   private duration_seconds!: number;
+  private genre!: string;
 
   setVideoId(id: number): this {
     this.video_id = id;
@@ -38,8 +39,13 @@ export class VideoBuilder {
     return this;
   }
 
+  setGenre(genre: string): this {
+    this.genre = genre;
+    return this;
+  }
+
   build(): Video {
-    if (!this.module_id || !this.title || !this.video_url || !this.duration_seconds) {
+    if (!this.module_id || !this.title || !this.video_url || !this.duration_seconds || !this.genre) {
       throw new Error("missing required fields!");
     }
 
@@ -49,7 +55,8 @@ export class VideoBuilder {
       this.title,
       this.video_url,
       this.duration_seconds,
-      this.manifest_url
+      this.manifest_url,
+      this.genre
     );
   }
 }
