@@ -4,6 +4,10 @@ export class VideoController {
   static async getVideoByGenre(req: Request, res: Response) {
     const genre = req.params.genre;
     try {
+      if (genre === "all" || genre === "All") {
+        const [video] = await sequelize.query("SELECT * FROM videos");
+        return res.json(video);
+      }
       const [video] = await sequelize.query(
         "SELECT * FROM videos WHERE genre = $1",
         { bind: [genre] }

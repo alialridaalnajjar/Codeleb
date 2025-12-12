@@ -9,7 +9,7 @@ export class VideoBuilder {
   private duration_seconds!: number;
   private genre!: string;
   private author?: string;
-
+private language?: string;
   setVideoId(id: number): this {
     this.video_id = id;
     return this;
@@ -49,6 +49,11 @@ export class VideoBuilder {
     return this;
   }
 
+  setLanguage(language: string): this {
+    this.language = language;
+    return this;
+  }
+
   build(): Video {
     if (!this.module_id || !this.title || !this.video_url || !this.duration_seconds || !this.genre) {
       throw new Error("missing required fields!");
@@ -62,7 +67,8 @@ export class VideoBuilder {
       this.duration_seconds,
       this.manifest_url,
       this.genre,
-      this.author
+      this.author,
+      this.language
     );
   }
 }
