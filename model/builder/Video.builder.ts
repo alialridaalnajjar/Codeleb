@@ -2,7 +2,7 @@ import { Video } from "../Video.model";
 
 export class VideoBuilder {
   private video_id?: number;
-  private module_id!: number;
+  private module!: string;
   private title!: string;
   private video_url!: string;
   private manifest_url?: string | null;
@@ -15,8 +15,8 @@ private language?: string;
     return this;
   }
 
-  setModuleId(moduleId: number): this {
-    this.module_id = moduleId;
+  setModule(module: string): this {
+    this.module = module;
     return this;
   }
 
@@ -55,13 +55,13 @@ private language?: string;
   }
 
   build(): Video {
-    if (!this.module_id || !this.title || !this.video_url || !this.duration_seconds || !this.genre) {
+    if (!this.module || !this.title || !this.video_url || !this.duration_seconds || !this.genre) {
       throw new Error("missing required fields!");
     }
 
     return new Video(
       this.video_id ?? 0,
-      this.module_id,
+      this.module,
       this.title,
       this.video_url,
       this.duration_seconds,
