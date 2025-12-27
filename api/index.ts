@@ -6,12 +6,15 @@ import activityRoute from "../routes/Activity.route";
 import videoRoute from "../routes/Video.route";
 import docsRoute from "../routes/Docs.route";
 import isNewRoute from "../routes/IsNew.route";
+
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["https://devart-learn.vercel.app"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(cors(corsOptions));
 

@@ -1,8 +1,4 @@
 {
-  "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
