@@ -27,4 +27,5 @@ app.use("/api/video", videoRoute);
 app.use("/api/docs", docsRoute);
 app.use("/api/isNew", isNewRoute);
 
+
 export default app;

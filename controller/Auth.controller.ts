@@ -42,10 +42,11 @@ export class AuthController {
         .setLocation(location)
         .setFirstName(first_name)
         .setLastName(last_name)
+        .setIsNew(true)
         .build();
 
       const [result]: any = await sequelize.query(
-        "INSERT INTO users (username, email, password_hash, role, created_at, profile_photo_url, DOB, location, first_name, last_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING user_id, username, email, role, created_at",
+        "INSERT INTO users (username, email, password_hash, role, created_at, profile_photo_url, DOB, location, first_name, last_name, isnew) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING user_id, username, email, role, created_at",
         {
           bind: [
             userBuilder.username,
@@ -58,6 +59,7 @@ export class AuthController {
             userBuilder.location,
             userBuilder.first_name,
             userBuilder.last_name,
+            userBuilder.isNew,
           ],
         }
       );
@@ -68,13 +70,15 @@ export class AuthController {
         newUser.user_id,
         newUser.email,
         newUser.role,
-        newUser.username
+        newUser.username,
+        false 
       );
 
       res.status(201).json({
         message: "User registered successfully",
         token,
       });
+      console.log("User registered:", req.body.rememberMe);
     } catch (error) {
       console.error("Registration error:", error);
       res.status(500).json({ message: "Internal server error" });
@@ -83,7 +87,7 @@ export class AuthController {
 
   static async login(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
+      const { email, password , rememberMe} = req.body;
 
       if (!email || !password) {
         return res
@@ -101,7 +105,6 @@ export class AuthController {
       }
 
       const user = users[0];
-
       const isPasswordValid = await bcrypt.compare(
         password,
         user.password_hash
@@ -115,7 +118,8 @@ export class AuthController {
         user.user_id,
         user.email,
         user.role,
-        user.username
+        user.username,
+        rememberMe
       );
 
       res.status(200).json({
@@ -126,4 +130,5 @@ export class AuthController {
       console.error("Login error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
-  }}
+  }
+}
