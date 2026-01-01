@@ -18,9 +18,9 @@ export class JWTUtil {
   ): string {
     const shouldRemember = rememberMe === true || rememberMe === "true";
 
-    if (shouldRemember) {
+    if (shouldRemember === true) {
       return jwt.sign({ userId, email, role, username }, JWT_SECRET, {
-        expiresIn: "30d",
+        expiresIn: "7d",
       });
     }
     return jwt.sign({ userId, email, role, username }, JWT_SECRET, {
