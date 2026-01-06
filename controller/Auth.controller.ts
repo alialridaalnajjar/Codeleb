@@ -88,7 +88,7 @@ export class AuthController {
   static async login(req: Request, res: Response) {
     try {
       const { email, password , rememberMe} = req.body;
-
+      
       if (!email || !password) {
         return res
           .status(400)

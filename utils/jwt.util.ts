@@ -14,13 +14,13 @@ export class JWTUtil {
     email: string,
     role: string,
     username: string,
-    rememberMe: boolean | string
+    rememberMe: boolean | string = false
   ): string {
     const shouldRemember = rememberMe === true || rememberMe === "true";
 
-    if (shouldRemember === true) {
+    if (shouldRemember) {
       return jwt.sign({ userId, email, role, username }, JWT_SECRET, {
-        expiresIn: "2mo",
+        expiresIn: "60d",
       });
     }
     return jwt.sign({ userId, email, role, username }, JWT_SECRET, {
